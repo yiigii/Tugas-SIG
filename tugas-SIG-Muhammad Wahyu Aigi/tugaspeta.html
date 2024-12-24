@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Peta Kampus</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+  <style>
+    #map {
+      height: 500px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h1>Peta Kampus</h1>
+  <div id="map"></div>
+
+  <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+  <script>
+    // Initialize the map and set its view
+    const map = L.map('map').setView([-6.3, 106.8], 12);
+
+    // Add OpenStreetMap tiles
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: '© OpenStreetMap contributors'
+    }).addTo(map);
+
+    // GeoJSON data with location points and properties
+    const geojsonData = {
+      "type": "FeatureCollection",
+      "features": [
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "Kampus A STT-NF",
+            "type": "Kampus",
+            "kota": "Depok"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [106.7777, -6.3548]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "Kampus B STT-NF",
+            "type": "Kampus",
+            "kota": "Jakarta Selatan"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [106.8352, -6.3332]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "Kampus UI",
+            "type": "Kampus",
+            "kota": "Depok"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [106.8233, -6.3628]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "Kampus Univ Pancasila",
+            "type": "Kampus",
+            "kota": "Jakarta Selatan"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [106.8373, -6.3246]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "Kampus Gunadarma",
+            "type": "Kampus",
+            "kota": "Depok"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [106.7754, -6.3632]
+          }
+        },
+        {
+          "type": "Feature",
+          "properties": {
+            "name": "Kampus Polimedia",
+            "type": "Kampus",
+            "kota": "Jakarta Selatan"
+          },
+          "geometry": {
+            "type": "Point",
+            "coordinates": [106.8340, -6.3336]
+          }
+        }
+      ]
+    };
+
+    // Add GeoJSON data to the map
+    L.geoJSON(geojsonData, {
+      onEachFeature: function (feature, layer) {
+        if (feature.properties && feature.properties.name) {
+          layer.bindPopup(
+            `<b>${feature.properties.name}</b><br>Type: ${feature.properties.type}<br>Kota: ${feature.properties.kota}`
+          );
+        }
+      }
+    }).addTo(map);
+  </script>
+</body>
+</html>
